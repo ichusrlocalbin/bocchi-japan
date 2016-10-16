@@ -12,21 +12,21 @@ class MatchingList extends Component {
     }
 
     getList(twitterId) {
-        const response = {
-          "full_text": "enjoying coding! #bocchiJapan ",
-          "lang": "ja",
-          "create_at": "2016-10-16 04:39:49 +0000",
-          "user": {
-            "screen_name": "hasebe_test",
-            "name": "hasebe_test",
-            "lang": "ja",
-            "id": "787511839210901505"
-          },
-          "place": {
-            "name": "Yamato-shi",
-            "country": "Japan"
-          }
-        }
+        // const response = {
+        //   "full_text": "enjoying coding! #bocchiJapan ",
+        //   "lang": "ja",
+        //   "create_at": "2016-10-16 04:39:49 +0000",
+        //   "user": {
+        //     "screen_name": "hasebe_test",
+        //     "name": "hasebe_test",
+        //     "lang": "ja",
+        //     "id": "787511839210901505"
+        //   },
+        //   "place": {
+        //     "name": "Yamato-shi",
+        //     "country": "Japan"
+        //   }
+        // }
 
         // return new Promise((resolve,reject) => {
         //     resolve(response);
@@ -74,6 +74,7 @@ class MatchingList extends Component {
         this.getList("83496671")
         .then(
             (response) => {
+                console.log(response);
                 this.setState({data: response});
             }
         ).catch(
