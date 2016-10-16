@@ -54,7 +54,8 @@ end
 
 get '/tweets_demo' do
   content_type :json
-  tweets = File.open('test_data.json').read
+  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_data.json'))
+  tweets = File.open(path).read
   JSON.pretty_generate(JSON.parse(tweets))
 end
 
