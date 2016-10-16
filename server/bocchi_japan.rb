@@ -23,16 +23,12 @@ def search_bocchi_tweets
   tweets = []
   result_tweets.take(10).each_with_index do |tw, i|
     u = tw.user
-    # puts "#{u.screen_name}, name: #{u.name},  location: #{u.location}, lang: #{u.lang}, id: #{u.id}.to_s"
     user = {
       screen_name: u.screen_name,
       name: u.name,
       lang: u.lang,
       id: u.id.to_s
     }
-    # puts "user: #{user.to_json}"
-    # puts "tw.full_text: #{tw.full_text}"
-    # puts "tw.lang: #{tw.lang}"
     tweet = {
       full_text: tw.full_text,
       lang: tw.lang,
@@ -47,20 +43,21 @@ def search_bocchi_tweets
 end
 
 def make_pairs(tweets)
-  tweet_pairs = filter_tweets(tweets)
+  ts = JSON.parse(JSON.generate(tweets))
+  tweet_pairs = filter_tweets(ts)
   set_pair(tweet_pairs)
 end
 
 def filter_tweets(tweets)
   tweet_pairs = []
   tweets.reverse.each_with_index do |tweet, index|
-    tweet_time = Time.parse(tweet["create_at"])
+    tweet_time = Time.parse(tweet['create_at'])
     tweets.reverse[index+1..-1].each do |t|
-      t_time = Time.parse(t["create_at"])
+      t_time = Time.parse(t['create_at'])
       time_lag = t_time - tweet_time
-      next if tweet["place"].nil? || t["place"].nil?  ||tweet["place"]["name"] != t["place"]["name"]
+      next if tweet['place'].nil? || t['place'].nil?  ||tweet['place']['name'] != t['place']['name']
       next if time_lag > 5 * 60 * 60
-      next if tweet["user"]["id"] == t["user"]["id"]
+      next if tweet['user']['id'] == t['user']['id']
       # next if tweet_pairs.map{|t| t[1]}.includes?(tweet["user"]["id"])
       tweet_pairs << [tweet, t]
     end
@@ -97,26 +94,6 @@ get '/tweet' do
   content_type :json
   out_pair(pairs, id)
 end
-
-get '/tweets_demo' do
-  tweets = search_bocchi_tweets
-  content_type :json
-  JSON.pretty_generate(tweets.reverse.map{|t| t['create_at']})
-  # path = File.expand_path(File.join(File.dirname(__FILE__), 'test_search_results.json'))
-  # tweets = JSON.parse(File.open(path).read)
-  # response.headers['Access-Control-Allow-Origin'] = '*'
-  # pairs = make_pairs(tweets)
-  # id = params['id']
-  # content_type :json
-  # out_pair(pairs, id)
-end
-
-# get '/tweets_demo' do
-#   content_type :json
-#   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_data.json'))
-#   tweets = File.open(path).read
-#   JSON.pretty_generate(JSON.parse(tweets))
-# end
 
 get '/tweet_demo' do
   pairs = make_test_pairs
