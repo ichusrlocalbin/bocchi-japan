@@ -1,9 +1,98 @@
 html {
   font-family: 'Roboto', sans-serif;
+  font-family:"ヒラギノ角ゴ Pro W3","Hiragino Kaku Gothic Pro","ヒラギノ角ゴ ProN W3","Hiragino Kaku Gothic ProN","メイリオ","Meiryo","Osaka","Osaka－等幅","Osaka-Mono","MS UI Gothic","ＭＳ Ｐゴシック","MS PGothic","ＭＳ ゴシック","MS Gothic","游ゴシック体","Yu Gothic","YuGothic",sans-serif;
 }
 
 body {
   font-size: 13px;
   line-height: 20px;
   margin: 0px;
+}
+
+li{
+	list-style: none;
+}
+
+.wrapper{
+	width: 1265px;
+	height: 2000px;
+	margin: 0 auto;
+	padding: 30px 0;
+	background-color: #ccc;
+	position: relative;
+}
+.logo{
+	width: 400px;
+	height: 200px;
+	margin: 0 auto 95px;
+	padding: 20px 0 0 0;
+	background-color: #fff;
+	font-size: 50px;
+	font-weight: bold;
+	line-height: 40px;
+	text-align: center;
+}
+.match_area{
+
+}
+
+.match{
+	position: absolute;
+	top: 185px;
+	right: 35px;
+	background:url("../img/match.png")no-repeat;
+	background-size: contain;
+	width: 264px;
+	height: 202px;
+}
+.text{
+	position: absolute;
+	top: 90px;
+	left: 30px;
+	color: #fff;
+	font-size: 40px;
+	font-weight: bold;
+}
+.place{
+	position: absolute;
+	top: 90px;
+	left: 40px;
+	background:url("../img/place.png")no-repeat;
+	background-size: contain;
+	width: 400px;
+	height: 300px;
+}
+
+.img{
+	width: 850px;
+	margin: 0 auto;
+}
+.id{
+	width: 50%;
+	margin: 0 auto;
+}
+.id li:nth-of-type(1){
+	margin: 0 30px 0 0;
+}
+
+.myid{
+    display: block;
+    float: left;
+    width: 300px;
+    margin: 0 auto;
+    background-color: #fff;
+}
+.youid{
+	display: block;
+	float: right;
+	width: 300px;
+	margin: 0 auto;
+	background-color: #fff;
+}
+
+.match_area_id {
+    display: -webkit-flex; /* Safari */
+    display: flex;
+    -webkit-justify-content: center; /* Safari */
+    justify-content:         center;
 }
