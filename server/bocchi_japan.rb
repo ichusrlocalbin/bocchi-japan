@@ -61,8 +61,16 @@ end
 
 get '/tweet_demo' do
   content_type :json
-  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_id_data.json'))
-  tweets = File.open(path).read
-  JSON.pretty_generate(JSON.parse(tweets))
+  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_pair_data.json'))
+  tweet_pairs = JSON.parse(File.open(path).read)
+  pairs = {}
+  tweet_pairs.each do |tweet_pair|
+    t1, t2 = tweet_pair[0], tweet_pair[1]
+    pairs[t1['user']['id']] = t2
+    pairs[t2['user']['id']] = t1
+  end
+  id = params['id']
+  tweet = pairs[id] || {}
+  JSON.pretty_generate(tweet)
 end
 
