@@ -48,12 +48,14 @@ end
 
 get '/tweets' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   tweets = search_bocchi_tweets
   JSON.pretty_generate(tweets)
 end
 
 get '/tweets_demo' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_data.json'))
   tweets = File.open(path).read
   JSON.pretty_generate(JSON.parse(tweets))
@@ -61,6 +63,7 @@ end
 
 get '/tweet_demo' do
   content_type :json
+  response.headers['Access-Control-Allow-Origin'] = '*'
   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_pair_data.json'))
   tweet_pairs = JSON.parse(File.open(path).read)
   pairs = {}
