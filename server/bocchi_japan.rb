@@ -59,7 +59,7 @@ get '/tweets_demo' do
   JSON.pretty_generate(JSON.parse(tweets))
 end
 
-get '/tweets_demo?id=83496671' do
+get '/tweet_demo?id=83496671' do
   content_type :json
   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_id_data.json'))
   tweets = File.open(path).read
