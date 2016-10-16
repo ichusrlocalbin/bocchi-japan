@@ -2,10 +2,8 @@ import React, { Component, PropTypes } from "react"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import Logo from '../components/Logo'
-import MatchingView from '../components/MatchingView'
 import MatchingList from '../components/MatchingList'
-import * as CounterActions from '../actions/counter'
+import * as DummyActions from '../actions/dummy'
 
 class App extends Component {
   render() {
@@ -19,7 +17,6 @@ class App extends Component {
 }
 
 App.propTypes = {
-  value: PropTypes.number.isRequired,
   actions: PropTypes.object.isRequired
 }
 
@@ -30,7 +27,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    actions: bindActionCreators(CounterActions, dispatch)
+    actions: bindActionCreators(DummyActions, dispatch)
   }
 }
 export default connect(

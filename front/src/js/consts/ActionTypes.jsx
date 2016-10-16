@@ -1,3 +1,1 @@
-export const GET_MATCHING_LIST = 'GET_MATCHING_LIST'
-export const INCREMENT = 'INCREMENT'
-export const DECREMENT = 'DECREMENT'
+export const DUMMY = 'DUMMY'

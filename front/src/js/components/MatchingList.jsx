@@ -13,7 +13,8 @@ class MatchingList extends Component {
 
     getList(twitterId) {
         return new Promise((resolve,reject) => {
-            request.get("https://bocchi-japan.herokuapp.com/tweet_demo?id=" + twitterId)
+            // request.get("https://bocchi-japan.herokuapp.com/tweet_demo?id=" + twitterId)
+            request.get("https://bocchi-japan.herokuapp.com/tweet?id=" + twitterId)
             .end(
                 (err, res) => {
                     if (err) {
@@ -27,7 +28,6 @@ class MatchingList extends Component {
     }
 
     onGetButtonClick() {
-        console.log("hoge");
         this.getList("83496671")
         .then(
             (response) => {
@@ -46,7 +46,7 @@ class MatchingList extends Component {
         if(this.state.data) {
             youid = this.state.data.user.screen_name;
             place = this.state.data.place.country + " " + this.state.data.place.name + "now!!";
-            console.log(this.state.data);
+            // console.log(this.state.data);
         }
 
         return (
