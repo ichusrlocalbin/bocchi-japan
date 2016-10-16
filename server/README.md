@@ -9,7 +9,7 @@ bundle install --path vendor/bundle
 ## 実行方法
 
 ```
-./bocchi_japan.rb
+bundle exec ruby server/bocchi_japan.rb
 ```
 
 
