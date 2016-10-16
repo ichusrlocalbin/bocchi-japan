@@ -58,8 +58,8 @@ def filter_tweets(tweets)
     tweets.reverse[index+1..-1].each do |t|
       t_time = Time.parse(t["create_at"])
       time_lag = t_time - tweet_time
-      next if tweet["place"]["name"] != t["place"]["name"]
-      next if time_lag > 3600
+      next if tweet["place"].nil? || t["place"].nil?  ||tweet["place"]["name"] != t["place"]["name"]
+      next if time_lag > 5 * 60 * 60
       next if tweet["user"]["id"] == t["user"]["id"]
       # next if tweet_pairs.map{|t| t[1]}.includes?(tweet["user"]["id"])
       tweet_pairs << [tweet, t]
@@ -70,7 +70,7 @@ end
 
 def make_test_pairs
   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_pair_data.json'))
-  tweet_pairs = JSON.parse(File.open(path).read)
+  tweet_pairs = JSON.load(File.open(path))
   set_pair(tweet_pairs)
 end
 
@@ -99,10 +99,12 @@ get '/tweet' do
 end
 
 get '/tweets_demo' do
-  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_search_results.json'))
-  tweets = JSON.parse(File.open(path).read)
-  response.headers['Access-Control-Allow-Origin'] = '*'
-  tweets.reverse
+  tweets = search_bocchi_tweets
+  content_type :json
+  JSON.pretty_generate(tweets.reverse.map{|t| t['create_at']})
+  # path = File.expand_path(File.join(File.dirname(__FILE__), 'test_search_results.json'))
+  # tweets = JSON.parse(File.open(path).read)
+  # response.headers['Access-Control-Allow-Origin'] = '*'
   # pairs = make_pairs(tweets)
   # id = params['id']
   # content_type :json
