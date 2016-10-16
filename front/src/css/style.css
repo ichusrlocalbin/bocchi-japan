@@ -38,7 +38,7 @@ li{
 .match{
 	position: absolute;
 	top: 185px;
-	right: 35px;
+	right: 400px;
 	background:url("../img/match.png")no-repeat;
 	background-size: contain;
 	width: 264px;
@@ -63,7 +63,7 @@ li{
 .place{
 	position: absolute;
 	top: 90px;
-	left: 40px;
+	left: 250px;
 	background:url("../img/place.png")no-repeat;
 	background-size: contain;
 	width: 400px;
@@ -71,9 +71,16 @@ li{
 }
 
 .img{
-	width: 650px;
+	width: 850px;
 	margin: 0 auto;
 }
+
+.pumpkin {
+    margin: 0 100px;
+    width: 600px;
+    height: 550px;
+}
+
 .id{
 	width: 50%;
 	margin: 0 auto;
