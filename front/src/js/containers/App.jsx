@@ -1,18 +1,20 @@
 import React, { Component, PropTypes } from "react"
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Header from '../components/Header'
+
+import Logo from '../components/Logo'
+import MatchingView from '../components/MatchingView'
+import MatchingList from '../components/MatchingList'
 import * as CounterActions from '../actions/counter'
-import imgTest from '../../img/test.png'
 
 class App extends Component {
   render() {
     const { value, actions } = this.props;
     return (
-      <div>
-        <Header />
-        <img src={imgTest}/>
-      </div>
+        <div>
+            <MatchingView/>
+            <MatchingList/>
+        </div>
     )
   }
 }
