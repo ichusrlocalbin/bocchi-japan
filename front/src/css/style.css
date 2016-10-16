@@ -33,7 +33,6 @@ li{
 	text-align: center;
 }
 .match_area{
-
 }
 
 .match{
@@ -51,6 +50,14 @@ li{
 	left: 30px;
 	color: #fff;
 	font-size: 40px;
+	font-weight: bold;
+}
+.text2{
+	position: absolute;
+	top: 95px;
+	left: 30px;
+	color: #fff;
+	font-size: 25px;
 	font-weight: bold;
 }
 .place{
