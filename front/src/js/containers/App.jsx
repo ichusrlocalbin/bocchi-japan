@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Header from '../components/Header'
 import * as CounterActions from '../actions/counter'
+import imgTest from '../../img/test.png'
 
 class App extends Component {
   render() {
@@ -10,9 +11,7 @@ class App extends Component {
     return (
       <div>
         <Header />
-        <h2>count={value}</h2>
-        <button onClick={actions.increment}>増加</button>
-        <button onClick={actions.decrement}>減少</button>
+        <img src={imgTest}/>
       </div>
     )
   }
