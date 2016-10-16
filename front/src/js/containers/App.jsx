@@ -12,7 +12,6 @@ class App extends Component {
     const { value, actions } = this.props;
     return (
         <div>
-            <Logo/>
             <MatchingView/>
             <MatchingList/>
         </div>
