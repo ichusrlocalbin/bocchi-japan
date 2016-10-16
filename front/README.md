@@ -13,7 +13,7 @@ npm start
 ```
 
 ## serverをlocalhostで動かす場合
-front/src/js/components/MatchingList.jsxの16行目を以下のように変更する  
+front/src/js/components/MatchingList.jsxの18行目を以下のように変更する  
 ```
 <修正前>
 request.get("https://bocchi-japan.herokuapp.com/tweet?id=" + twitterId)
