@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+require 'json'
 require 'bundler'
 Bundler.require
 
@@ -9,14 +10,35 @@ client = Twitter::REST::Client.new(
   access_token_secret: '1ZeKfR1UAu0vo0dGATnlcwff9U6511edmnyuKaPLWOfBm',
 )
 
-query = "ruby"
+tag = 'bocchijapan'
+
 since_id = nil
-# count : 取得する件数
-# result_type : 内容指定。recentで最近の内容、popularで人気の内容。
-# exclude : 除外する内容。retweetsでリツイートを除外。
-# since_id : 指定ID以降から検索だが、検索結果が100件以上の場合は無効。
+query = "##{tag}"
+
 result_tweets = client.search(query, count: 10, result_type: 'recent', exclude: 'retweets', since_id: since_id)
 
+tweets = []
 result_tweets.take(10).each_with_index do |tw, i|
-  puts("#{i} : #{tw.user.screen_name} : #{tw.full_text}")
+  u = tw.user
+  # puts "#{u.screen_name}, name: #{u.name},  location: #{u.location}, lang: #{u.lang}, id: #{u.id}.to_s"
+  user = { 
+    screen_name: u.screen_name,
+    name: u.name,
+    lang: u.lang,
+    id: u.id.to_s 
+  }
+  # puts "user: #{user.to_json}"
+  # puts "tw.full_text: #{tw.full_text}"
+  # puts "tw.lang: #{tw.lang}"
+  tweet = {
+    full_text: tw.full_text,
+    lang: tw.lang,
+    create_at: tw.created_at,
+    user: user
+  }
+  tweet[:geo] = tw.geo unless tw.geo.nil?
+  tweet[:place] = { name: tw.place.name, country: tw.place.country } unless tw.place.nil?
+  tweets << tweet
 end
+
+puts JSON.pretty_generate(tweets)
