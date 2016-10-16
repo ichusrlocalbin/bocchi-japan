@@ -5,6 +5,43 @@ import request from 'superagent';
 class MatchingList extends Component {
 
     getList(twitterId) {
+        // const response = {
+        //   "full_text": "enjoying coding! #bocchiJapan ",
+        //   "lang": "ja",
+        //   "create_at": "2016-10-16 04:39:49 +0000",
+        //   "user": {
+        //     "screen_name": "hasebe_test",
+        //     "name": "hasebe_test",
+        //     "lang": "ja",
+        //     "id": "787511839210901505"
+        //   },
+        //   "place": {
+        //     "name": "Yamato-shi",
+        //     "country": "Japan"
+        //   }
+        // }
+
+        console.log(response.user);
+
+        return new Promise((resolve,reject) => {
+            request.get("https://bocchi-japan.herokuapp.com/tweet_demo?id=" + twitterId)
+            .end(
+                (err, res) => {
+                    if (err) {
+                        reject(err);
+                    } else {
+                        resolve(JSON.parse(res.text));
+                    }
+                }
+            );
+        });
+
+        // let p = new Promise(function(resolve,reject) {
+        //     window.setTimeout(function() {
+        //         resolve(true);
+        //         //reject('error');
+        //     },1000);
+        // });
         // return new Promise() {
         //     (resolve, reject) => {
         //         request.get("https://bocchi-japan.herokuapp.com/tweet_demo?id=" + twitterId)
@@ -19,6 +56,8 @@ class MatchingList extends Component {
         //         );
         //     }
         // };
+
+
     }
 
     onGetButtonClick() {
