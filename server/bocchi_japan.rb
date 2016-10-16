@@ -46,34 +46,81 @@ def search_bocchi_tweets
   tweets
 end
 
-get '/tweets' do
-  content_type :json
-  response.headers['Access-Control-Allow-Origin'] = '*'
-  tweets = search_bocchi_tweets
-  JSON.pretty_generate(tweets)
+def make_pairs(tweets)
+  tweet_pairs = filter_tweets(tweets)
+  set_pair(tweet_pairs)
 end
 
-get '/tweets_demo' do
-  content_type :json
-  response.headers['Access-Control-Allow-Origin'] = '*'
-  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_data.json'))
-  tweets = File.open(path).read
-  JSON.pretty_generate(JSON.parse(tweets))
+def filter_tweets(tweets)
+  tweet_pairs = []
+  tweets.reverse.each_with_index do |tweet, index|
+    tweet_time = Time.parse(tweet["create_at"])
+    tweets.reverse[index+1..-1].each do |t|
+      t_time = Time.parse(t["create_at"])
+      time_lag = t_time - tweet_time
+      next if tweet["place"]["name"] != t["place"]["name"]
+      next if time_lag > 3600
+      next if tweet["user"]["id"] == t["user"]["id"]
+      # next if tweet_pairs.map{|t| t[1]}.includes?(tweet["user"]["id"])
+      tweet_pairs << [tweet, t]
+    end
+  end
+  tweet_pairs
 end
 
-get '/tweet_demo' do
-  content_type :json
-  response.headers['Access-Control-Allow-Origin'] = '*'
+def make_test_pairs
   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_pair_data.json'))
   tweet_pairs = JSON.parse(File.open(path).read)
+  set_pair(tweet_pairs)
+end
+
+def set_pair(tweet_pairs)
   pairs = {}
   tweet_pairs.each do |tweet_pair|
     t1, t2 = tweet_pair[0], tweet_pair[1]
     pairs[t1['user']['id']] = t2
     pairs[t2['user']['id']] = t1
   end
-  id = params['id']
+  pairs
+end
+
+def out_pair(pairs, id)
   tweet = pairs[id] || {}
   JSON.pretty_generate(tweet)
+end
+
+get '/tweet' do
+  tweets = search_bocchi_tweets
+  pairs = make_pairs(tweets)
+  id = params['id']
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  content_type :json
+  out_pair(pairs, id)
+end
+
+get '/tweets_demo' do
+  path = File.expand_path(File.join(File.dirname(__FILE__), 'test_search_results.json'))
+  tweets = JSON.parse(File.open(path).read)
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  tweets.reverse
+  # pairs = make_pairs(tweets)
+  # id = params['id']
+  # content_type :json
+  # out_pair(pairs, id)
+end
+
+# get '/tweets_demo' do
+#   content_type :json
+#   path = File.expand_path(File.join(File.dirname(__FILE__), 'test_data.json'))
+#   tweets = File.open(path).read
+#   JSON.pretty_generate(JSON.parse(tweets))
+# end
+
+get '/tweet_demo' do
+  pairs = make_test_pairs
+  id = params['id']
+  response.headers['Access-Control-Allow-Origin'] = '*'
+  content_type :json
+  out_pair(pairs, id)
 end
 
